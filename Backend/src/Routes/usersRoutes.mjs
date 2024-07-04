@@ -6,12 +6,12 @@ import {
 } from "../Utils/validations/loginUserValidation.mjs";
 import { resolveUserByIndex } from "../utils/helperfunctions/index.mjs";
 import {
-  getAllUsers,
-  getUserById,
+  // getAllUsers,
+  // getUserById,
   createUser,
-  updateUser,
-  partialUpdateUser,
-  deleteUser,
+  // updateUser,
+  // partialUpdateUser,
+  // deleteUser,
   loginUser,
   logoutUser,
 } from "../controllers/usersController.mjs";
