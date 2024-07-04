@@ -1,9 +1,11 @@
 import express from "express";
+import cookieParser from "cookie-parser"
 import router from "./Routes/index.mjs";
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser())
 
 // Use our router
 app.use(router);

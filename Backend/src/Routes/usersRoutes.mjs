@@ -2,8 +2,9 @@ import express from "express";
 import {
   createUserValidation,
   updateUserValidation,
-} from "../Utils/validations/index.mjs";
-import { resolveUserByIndex } from "../Utils/helperfunctions/index.mjs";
+  loginUserValidation,
+} from "../Utils/validations/loginUserValidation.mjs";
+import { resolveUserByIndex } from "../utils/helperfunctions/index.mjs";
 import {
   getAllUsers,
   getUserById,
@@ -11,18 +12,32 @@ import {
   updateUser,
   partialUpdateUser,
   deleteUser,
+  loginUser,
+  logoutUser,
 } from "../controllers/usersController.mjs";
+import { authenticateJWT } from "../controllers/authController.mjs";
 
 const router = express.Router();
 
 // Declare your routes
-router.route("/").get(getAllUsers);
-router.route("/:id").get(resolveUserByIndex, getUserById);
+router.route("/").get(authenticateJWT, getAllUsers);
+router.route("/:id").get(authenticateJWT, resolveUserByIndex, getUserById);
 router.route("/").post(createUserValidation, createUser);
-router.route("/:id").put(updateUserValidation, resolveUserByIndex, updateUser);
 router
   .route("/:id")
-  .patch(updateUserValidation, resolveUserByIndex, partialUpdateUser);
-router.route("/:id").delete(resolveUserByIndex, deleteUser);
+  .put(updateUserValidation, authenticateJWT, resolveUserByIndex, updateUser);
+router
+  .route("/:id")
+  .patch(
+    updateUserValidation,
+    authenticateJWT,
+    resolveUserByIndex,
+    partialUpdateUser
+  );
+router.route("/:id").delete(authenticateJWT, resolveUserByIndex, deleteUser);
+
+// New routes for login and logout
+router.route("/").post(loginUserValidation, loginUser);
+router.route("/").post(logoutUser);
 
 export default router;
