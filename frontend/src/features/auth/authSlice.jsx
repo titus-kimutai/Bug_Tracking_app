@@ -31,7 +31,7 @@ export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWi
     const response = await axios.get(`${API_URL}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return response.data.user;  // Ensure this returns the correct user object
+    return response.data.user;  
   } catch (error) {
     return rejectWithValue(error.response?.data || { message: 'An error occurred' });
   }

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchUser, logout } from '../../../features/auth/authSlice';
@@ -6,7 +6,9 @@ import '../styles/navbar.css';
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { user, token } = useSelector((state) => state.auth);
+
 
   useEffect(() => {
     if (token && !user) {
@@ -16,6 +18,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/')
   };
 
   return (
