@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id       Int       @id @default(autoincrement())
+  username      String
+  email         String    @unique
+  password      String    
+  role          String
+  projects      ProjectMember[]
+  reportedIssues Issue[] @relation("Reporter")
+  assignedIssues Issue[] @relation("Assignee")
+  comments      Comment[]
+}
+
+model Project {
+  project_id   Int              @id @default(autoincrement())
+  name         String
+  description  String?
+  created_at   DateTime         @default(now())
+  updated_at   DateTime         @updatedAt
+  members      ProjectMember[]
+  issues       Issue[]          @relation("ProjectIssues")  // Updated relation
+}
+
+model ProjectMember {
+  project_member_id Int    @id @default(autoincrement())
+  project_id        Int
+  user_id           Int
+  role              String
+
+  project           Project @relation(fields: [project_id], references: [project_id])
+  user              User    @relation(fields: [user_id], references: [user_id])
+
+  @@unique([project_id, user_id])
+}
+
+model Issue {
+  issue_id     Int      @id @default(autoincrement())
+  title        String
+  description  String?
+  status       String
+  priority     String
+  severity     String
+  project_id   Int
+  reporter_id  Int
+  assignee_id  Int?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  project      Project @relation("ProjectIssues", fields: [project_id], references: [project_id])
+  reporter     User    @relation("Reporter", fields: [reporter_id], references: [user_id])
+  assignee     User?   @relation("Assignee", fields: [assignee_id], references: [user_id])
+  comments     Comment[]
+  attachments  Attachment[]
+}
+
+model Comment {
+  comment_id Int      @id @default(autoincrement())
+  issue_id   Int
+  user_id    Int
+  content    String
+  created_at DateTime @default(now())
+
+  issue      Issue @relation(fields: [issue_id], references: [issue_id])
+  user       User  @relation(fields: [user_id], references: [user_id])
+}
+
+model Attachment {
+  attachment_id Int      @id @default(autoincrement())
+  issue_id      Int
+  file_path     String
+  uploaded_at   DateTime @default(now())
+
+  issue         Issue @relation(fields: [issue_id], references: [issue_id])
+}

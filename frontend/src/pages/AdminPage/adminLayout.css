@@ -1,0 +1,20 @@
+.container1{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.admin-layout {
+    width: 30%;
+
+  }
+  
+  .sidebar {
+    background-color: black;
+    padding: 15px;
+  }
+  .header{
+    text-align: center;
+    margin-left: 300px;
+  }
+  

@@ -1,0 +1,55 @@
+.container2 {
+  width: 50vw;
+  background-color: #f0f0f0;
+  margin-left: 15%;
+  display: flex;
+  justify-content: space-between;
+}
+.item{
+  display: flex;
+}
+.title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.item button{
+  height: 40px
+}
+
+.error {
+  color: red;
+}
+
+.table {
+  width: 45%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px;
+  text-align: left;
+}
+
+.table-row {
+  background-color: #fff;
+}
+
+.table-cell {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.form-container {
+  width: 45%;
+  margin-left: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
